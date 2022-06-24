@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %} {% block content %}
+<div class="jumbotron jumbotron-fluid text-muted" id="jumbotron">
+    <div class="container">
+        <h1 class="jumbotron-text d-flex justify-content-center text-center">Login</h1>
+        <p class="jumbotron-text d-flex justify-content-center text-center">Inicia Sesión para ingresar a los mantenedores</p>
+    </div>
+</div>
+
+{% if form.errors %}
+<p>Tu nombre de usuario y contraseña no coinciden. Inténtalo de nuevo.</p>
+{% endif %} {% if next %} {% if user.is_authenticated %}
+<p>Tu cuenta no tiene acceso a esta página. Para continuar, inicie sesión con una cuenta que tenga acceso.</p>
+{% else %}
+<p>Inicie sesión para ver esta página.</p>
+{% endif %} {% endif %}
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+    <hr>
+<div class="container">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center text-center">  <td>{{ form.username.label_tag }}</td></div>
+        <div class="col-12 d-flex justify-content-center text-center">  <td>{{ form.username }}</td></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center text-center"> <td>{{ form.password.label_tag }}</td></div>
+        <div class="col-12 d-flex justify-content-center text-center"><td>{{ form.password }}</td></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center text-center"><input type="submit" value="Login" /></div>
+        <div class="col-12 d-flex justify-content-center text-center"><input type="hidden" name="next" value="{{next}}" /></div>
+    </div>
+
+</form>
+
+{# Assumes you setup the password_reset view in your URLconf #}
+<div class="col-12 d-flex justify-content-center text-center">
+<p><a href="{% url 'password_reset' %}">¿Olvido su Clave?</a></p>
+</div>
+</div>
+<hr>
+{% endblock %}

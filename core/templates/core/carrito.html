@@ -1,0 +1,95 @@
+{% extends 'core/base.html' %} {% block Tittle%} Carrito Compras en JavaScript {%endblock%}
+
+{% load static %} {% block content%}
+<body>
+    <div class="jumbotron jumbotron-fluid text-muted" id="jumbotron">
+        <div class="container">
+            <h1 class="jumbotron-text">Carrito</h1>
+            <p class="jumbotron-text">Acá puedes agregar las descripciones de los productos o eliminarlos.</p>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row-12">
+            {% if 'OK' in request.GET %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Felicitaciones!!! </strong>Producto registrado satisfactoriamente
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>
+            </div>
+            {% endif %}
+            {% if 'FAIL' in request.GET %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Ups!!! </strong>En estos momentos no podemos atender su solicitud... inténtalo más tarde
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>
+            </div>
+            {% endif %}
+                    <h2 class="d-flex justify-content-center mb-3">Realizar Compra</h2>
+                    <form action="" method="POST" id="formulario" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div id="carrito-pedido" class="form-group table-responsive" >
+                            <table class="table" id="lista-compra" >
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Imagen</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Sub Total</th>
+                                        <th scope="col">Eliminar</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody >
+
+                                </tbody>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">SUB TOTAL :</th>
+                                    <th scope="col">
+                                        <p id="subtotal"></p>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">IVA :</th>
+                                    <th scope="col">
+                                        <p id="iva"></p>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">TOTAL :</th>
+                                    <th scope="col">
+                                        <input id="total" name="monto" class="font-weight-bold border-0" readonly style="background-color: white;"></input>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+
+                            </table>
+                        </div>
+                        <div class="row justify-content-between">
+                            <div class="col-md-4 mb-2">
+                                <a href="{% url 'productos' %}" class="btn btn-info btn-block">Seguir comprando</a>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <button href="" class="btn btn-success btn-block" id="procesar">Realizar compra</button>
+                            </div>
+                        </div>
+                    </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+{% endblock %} 
+
+
+{% block script%}
+<script src="{% static  'core/js/carrito.js' %}"></script>
+<script src="{% static  'core/js/sweetalert2.min.js' %}"></script>
+<script src="{% static  'core/js/compra.js' %}"></script>
+{%endblock%}
+

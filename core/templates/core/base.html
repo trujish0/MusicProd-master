@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es-cl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block Tittle %}{%endblock%}</title>
+
+    {% load static %}
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.css' %}">
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="{% static 'core/css/style3.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/sweetalert2.min.css' %}">
+    <!-- Icono para mostrar en pestaña-->
+    <link rel="shortcut icon" href="{% static 'core/img/music1.ico'%}">
+    <!--FontAwesome CSS-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+
+</head>
+
+<!-- Barra de navegación -->
+{%if title == Productos %}
+<body onload="actualizaHora(),generarCardGrid()" id="body"></body>
+{% else %}
+<body onload="actualizaHora()" id="body"></body>
+{% endif %}
+
+
+<nav class="navbar navbar-expand-lg navbar-indigo bg-indigo fixed-top" id="navbar">
+
+    <a class="navbar-brand" href="index.html">
+        <img src="{% static  'core/img/logo2.png'%}" alt="Brand" height="80px">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{% url 'productos' %}">Nuestros Productos</a>
+            </li>   
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'detallecompra' %}">Datos de Envio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'pago' %}">Pago</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'misCompras' %}">Mis Compras</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administración</a>
+                    {{perms}}
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% if perms.core.Vendedor%}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'agregarProducto' %}">Agregar Productos</a>
+                    <a class="dropdown-item" href="{% url 'listaProducto' %}">Editar/Eliminar Productos</a>
+                    {% endif %}
+                   
+                    {% if perms.core.Contador%}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'listaVentas' %}">Gestionar Ventas</a>
+                    <a class="dropdown-item" href="{% url 'detalleVenta' %}">Editar/Eliminar Ventas</a>
+                    {% endif %}
+                    {% if perms.core.Bodeguero%}
+                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'listaPedido' %}">Gestionar Pedidos</a>
+                        <a class="dropdown-item" href="{% url 'detallePedido' %}">Editar/Eliminar Pedidos</a>
+                    {% endif %}
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">{{ user.get_username }}</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout'%}?next={{index}}">Logout</a></li>
+            {% else %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login'%}?next={{index}}">Login</a></li>
+            {% endif %}
+
+        </ul>
+        {% block carrito%} {% endblock %}
+        <form class="form-inline">
+            
+            <div class="md-form my-0 text-light">
+                <input class="mr-sm-2 input-line" type="text" placeholder="Buscar" aria-label="Search">
+                <label id="hora" class="hora"></label>
+            </div>
+             <!--
+            <button class="btn btn-outline-light btn-sm my-2 my-sm-0" type="submit">Buscar</button>
+            <div class="custom-control custom-switch ml-2">
+                <input class="custom-control-input" type="checkbox" name="luz" checked="true" id="luz" onclick="apagarLuz()">
+                <label for="luz" class="custom-control-label text-white">Luces</label>    
+            -->
+            </div>
+        </form>
+
+    </div>
+
+</nav>
+<!-- Fin Barra de navegación-->
+
+<div class="container">
+    {% block content%} {%endblock%}
+</div>
+
+
+<!-- Footer -->
+
+<footer class="footer mt-4 py-4 bg-indigo" id="footer">
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-12">
+
+                <div>
+                    <ul class="nav nav-justified">
+                      <li class="nav-item">
+                            <a class="nav-link" href="">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Nuestros Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Quienes Somos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+
+
+            <div class="col-12">
+
+                <div class="text-center mt-2">
+                    <!-- Facebook -->
+                    <a class="card-link" href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+
+                    <!-- Twitter -->
+                    <a class="card-link" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i ></a>
+
+                    <!-- Google -->
+                    <a class="card-link" href="https://www.google.com/" target="_blank"><i class="fab fa-google"></i></a>
+
+                    <!-- Instagram -->
+                    <a class="card-link" href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+
+                    <!-- Linkedin -->
+                    <a class="card-link" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+
+                    <!-- Copyright -->
+                    <br><br>
+                    <b>MusicPro</b> <br>Todo música<br>Desde 1988<br> © 2022 Copyright
+                </div>
+                <!-- Copyright -->
+            </div>
+        </div>
+
+    </div>
+
+</footer>
+<!--Jvascrip de Bootstrap-->
+<!--Jquery first, then Popper.js, then Bootstrap.js-->
+<script src="{% static  'core/js/jquery-3.5.1.slim.min.js'%}"></script>
+<script src="{% static  'core/js/popper.min.js' %}"></script>
+<script src="{% static  'core/js/bootstrap.min.js'%}"></script>
+{% block script%} {%endblock%}
+<script src="{% static  'core/js/js_function.js' %}"></script>
+</body>
+
+</html>

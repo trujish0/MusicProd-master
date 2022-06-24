@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %} {% load static %} {% block Tittle%} Productos {%endblock%} 
+
+{% block carrito%}
+<div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <img src="{% static  'core/img/cart.jpeg'%}" class="nav-link dropdown-toggle img-fluid" height="70px"
+                width="70px" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"></img>
+            <div id="carrito" class="dropdown-menu" aria-labelledby="navbarCollapse">
+                <table id="lista-carrito" class="table">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <a href="#" id="vaciar-carrito" class="btn btn-primary btn-block">Vaciar Carrito</a>
+                <a href="#" id="procesar-pedido" class="btn btn-danger btn-block">Procesar
+                    Compra</a>
+            </div>
+        </li>
+    </ul>
+</div> 
+{% endblock %}
+
+{% block content%}
+
+
+<!-- jumbotron-->
+
+<div class="jumbotron jumbotron-fluid text-muted" id="jumbotron">
+    <div class="container">
+        <h1 class="jumbotron-text">Nuestros Productos</h1>
+        <p class="jumbotron-text">Descripcion</p>
+    </div>
+</div>
+
+<!--Grid de productos-->
+
+<div class="container" id="lista-productos">
+    <div class="row row-cols-1 row-cols-md-4" id="grid_productos">
+
+    </div>
+</div>
+
+
+{% endblock %} {% block script%}
+<script src="{% static  'core/js/js_api.js' %}"></script>
+<script src="{% static  'core/js/carrito.js' %}"></script>
+<script src="{% static  'core/js/pedido.js' %}"></script>
+<script src="{% static  'core/js/sweetalert2.min.js' %}"></script>
+<script src="{% static  'core/js/bootstrap.min.js' %}"></script>
+{%endblock%}

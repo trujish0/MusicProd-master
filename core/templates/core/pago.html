@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %} {% block Tittle%} MusicPro {%endblock%}
+
+{% load static %} {% block content%}
+<div class="container cabecera">
+    <h1>Indice</h1>
+
+</div>
+<hr>
+
+<section class="form-register">
+    <h2>Metodo de pago</h2>
+    <div class="wrap">
+		<form action="" class="formulario">
+			<div class="radio">
+				<h6>tipo de pago:</h6> 
+                <input type="radio" name="pago" id="Credito">
+				<label for="Credito">Credito</label>
+		
+				<input type="radio" name="pago" id="Debito">
+				<label for="Debito">Debito</label>
+			</div>
+    <input class="controls" type="text" name="tarjeta" id="tarjeta" placeholder="Ingrese numero de tarjeta">
+    <input class="controls" type="month" name="vencimiento tarjeta" id="vencimiento tarjeta" placeholder="Ingrese vencimiento tarjeta">
+    <input class="controls" type="email" name="correo" id="correo" placeholder="Ingrese su Correo">
+    <input class="controls" type="password" name="password" id="password" placeholder="ingrese pin">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Estoy de acuerdo con Terminos y Condiciones</label>
+      </div>
+    <input id="btn1" class="botons" type="submit" value="Pagar">
+
+    
+  </section>
+  {%endblock%}
+  {% block script%}
+  <link rel="stylesheet" href="{% static 'core/css/pago.css' %}">
+  <script src="{% static  'core/js/pago.js' %}"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="{% static  'core/js/sweetalert2.min.js' %}"></script>
+{% endblock %} 
